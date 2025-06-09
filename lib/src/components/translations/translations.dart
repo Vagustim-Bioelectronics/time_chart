@@ -102,12 +102,22 @@ class Translations {
 
 /// 일,월,화,... Sun, Mon, Tue,...
 List<String> getShortWeekdayList(BuildContext context) {
-  return dateTimeSymbolMap()[_locale(context)].SHORTWEEKDAYS;
+  final dateTimeSymbol = dateTimeSymbolMap()[_locale(context)];
+  if (dateTimeSymbol == null) {
+    throw Exception('DateTimeSymbols not found for locale: ${_locale(context)}');
+  }
+
+  return dateTimeSymbol.SHORTWEEKDAYS;
 }
 
 /// 1월, 2월, 3월,... Jan, Feb, Mar,...
 List<String> getShortMonthList(BuildContext context) {
-  return dateTimeSymbolMap()[_locale(context)].SHORTMONTHS;
+  final dateTimeSymbol = dateTimeSymbolMap()[_locale(context)];
+  if (dateTimeSymbol == null) {
+    throw Exception('DateTimeSymbols not found for locale: ${_locale(context)}');
+  }
+
+  return dateTimeSymbol.SHORTMONTHS;
 }
 
 String _locale(BuildContext context) {
