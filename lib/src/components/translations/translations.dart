@@ -4,7 +4,6 @@ import 'package:intl/intl.dart';
 
 class Translations {
   const Translations(this._context);
-
   final BuildContext _context;
 
   String get languageCode =>
@@ -41,7 +40,6 @@ class Translations {
     final daySuffix = isKorean ? '일' : '';
     final sleepTimeMonth = shortMonthList[range.start.month - 1];
     final wakeUpMonth = shortMonthList[range.end.month - 1];
-
     String result;
     if (range.start.day != range.end.day) {
       if (range.start.month != range.end.month) {
@@ -53,7 +51,6 @@ class Translations {
     } else {
       result = '$wakeUpMonth ${range.end.day}$daySuffix';
     }
-
     return result;
   }
 
@@ -102,21 +99,38 @@ class Translations {
 
 /// 일,월,화,... Sun, Mon, Tue,...
 List<String> getShortWeekdayList(BuildContext context) {
-  final dateTimeSymbol = dateTimeSymbolMap()[_locale(context)];
+  final locale = _locale(context);
+  final dateTimeSymbol = dateTimeSymbolMap()[locale];
+  
   if (dateTimeSymbol == null) {
-    throw Exception('DateTimeSymbols not found for locale: ${_locale(context)}');
+    // Fallback to English if locale is not found
+    final fallbackSymbol = dateTimeSymbolMap()['en'];
+    if (fallbackSymbol != null) {
+      return fallbackSymbol.SHORTWEEKDAYS;
+    }
+    // Ultimate fallback
+    return ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   }
-
+  
   return dateTimeSymbol.SHORTWEEKDAYS;
 }
 
 /// 1월, 2월, 3월,... Jan, Feb, Mar,...
 List<String> getShortMonthList(BuildContext context) {
-  final dateTimeSymbol = dateTimeSymbolMap()[_locale(context)];
+  final locale = _locale(context);
+  final dateTimeSymbol = dateTimeSymbolMap()[locale];
+  
   if (dateTimeSymbol == null) {
-    throw Exception('DateTimeSymbols not found for locale: ${_locale(context)}');
+    // Fallback to English if locale is not found
+    final fallbackSymbol = dateTimeSymbolMap()['en'];
+    if (fallbackSymbol != null) {
+      return fallbackSymbol.SHORTMONTHS;
+    }
+    // Ultimate fallback
+    return ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
+            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   }
-
+  
   return dateTimeSymbol.SHORTMONTHS;
 }
 
