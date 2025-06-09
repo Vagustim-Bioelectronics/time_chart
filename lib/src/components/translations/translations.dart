@@ -99,39 +99,15 @@ class Translations {
 
 /// 일,월,화,... Sun, Mon, Tue,...
 List<String> getShortWeekdayList(BuildContext context) {
-  final locale = _locale(context);
-  final dateTimeSymbol = dateTimeSymbolMap()[locale];
-  
-  if (dateTimeSymbol == null) {
-    // Fallback to English if locale is not found
-    final fallbackSymbol = dateTimeSymbolMap()['en'];
-    if (fallbackSymbol != null) {
-      return fallbackSymbol.SHORTWEEKDAYS;
-    }
-    // Ultimate fallback
-    return ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-  }
-  
-  return dateTimeSymbol.SHORTWEEKDAYS;
+  return dateTimeSymbolMap()[_locale(context)]?.SHORTWEEKDAYS ?? 
+       ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 }
 
 /// 1월, 2월, 3월,... Jan, Feb, Mar,...
 List<String> getShortMonthList(BuildContext context) {
-  final locale = _locale(context);
-  final dateTimeSymbol = dateTimeSymbolMap()[locale];
-  
-  if (dateTimeSymbol == null) {
-    // Fallback to English if locale is not found
-    final fallbackSymbol = dateTimeSymbolMap()['en'];
-    if (fallbackSymbol != null) {
-      return fallbackSymbol.SHORTMONTHS;
-    }
-    // Ultimate fallback
-    return ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
-            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  }
-  
-  return dateTimeSymbol.SHORTMONTHS;
+  return dateTimeSymbolMap()[_locale(context)]?.SHORTMONTHS ?? 
+       ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
+        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 }
 
 String _locale(BuildContext context) {
