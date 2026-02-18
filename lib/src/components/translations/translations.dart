@@ -27,6 +27,10 @@ class Translations {
         TimeOfDayFormat.a_space_h_colon_mm;
   }
 
+  bool get is24HourFormat {
+    return MediaQuery.alwaysUse24HourFormatOf(_context);
+  }
+
   String dateFormat(String pattern, DateTime date) {
     initializeDateFormatting('en', null);
     return DateFormat(pattern, languageCode).format(date);
@@ -85,8 +89,12 @@ class Translations {
   ///
   /// 예를 들어 한국어인 경우 [hour]가 13이면 오후 1시를 반환한다.
   /// 영어인 경우는 1 PM 을 반환한다.
+  /// 24시간 형식인 경우 13, 14, 15 등으로 표시한다.
   String formatHourOnly(int hour) {
     final date = DateTime(1, 1, 1, hour);
+    if (is24HourFormat) {
+      return dateFormat('HH', date);
+    }
     String format;
     if (isAHMM) {
       format = 'a h시';
