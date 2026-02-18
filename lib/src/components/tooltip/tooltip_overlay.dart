@@ -116,6 +116,15 @@ class _TimeTooltipOverlay extends StatelessWidget {
   Widget _timeTile(BuildContext context, DateTime dateTime) {
     final translations = Translations(context);
     final textTheme = Theme.of(context).textTheme;
+
+    if (translations.is24HourFormat) {
+      return Text(
+        translations.dateFormat('HH:mm', dateTime),
+        style: textTheme.headlineMedium!.copyWith(height: 1.1),
+        textScaler: const TextScaler.linear(1.0),
+      );
+    }
+
     final subtitle1 = textTheme.titleMedium!;
     return translations.formatTimeOfDayWidget(
       a: Text(
